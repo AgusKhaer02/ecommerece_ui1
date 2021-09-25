@@ -1,18 +1,42 @@
 import 'package:ecommerece_ui1/configs/custom_icons.dart';
+import 'package:ecommerece_ui1/data_dummy/products.dart';
 import 'package:ecommerece_ui1/screens/detail/detail_screen.dart';
 import 'package:flutter/material.dart';
 
-class FavProductList extends StatefulWidget {
-  const FavProductList({
+class SelectedCategoryList extends StatefulWidget {
+  final String selectedCategory;
+
+  const SelectedCategoryList({
     Key? key,
+    this.selectedCategory = "wristwatch",
   }) : super(key: key);
 
   @override
-  _FavProductListState createState() => _FavProductListState();
+  _SelectedCategoryListState createState() => _SelectedCategoryListState();
 }
 
-class _FavProductListState extends State<FavProductList> {
+class _SelectedCategoryListState extends State<SelectedCategoryList> {
   final ScrollController _scrollController = ScrollController();
+  Iterable<Map<String, dynamic>>? filteredList;
+
+  Future<dynamic>? filterProductsByCategory() async {
+    if (Products.products.where((element) =>
+            element["product_category"] == widget.selectedCategory) !=
+        []) {
+      var data = await Products.products.where(
+              (element) => element["product_category"] == widget.selectedCategory);
+      print("data ada");
+      filteredList = data;
+      Map<String,dynamic> data1 =  filteredList!.elementAt(1);
+      print(data1);
+      return filteredList;
+    } else {
+      print("data kosong");
+      // filteredList = "Data Kosong";
+      return null;
+    }
+
+  }
 
   bool isLiked = false;
 
@@ -22,7 +46,15 @@ class _FavProductListState extends State<FavProductList> {
     });
   }
 
-  Widget favProductItem(BuildContext context) {
+  Widget selectedCategoryItem(
+      {required BuildContext context,
+      required String image,
+      required String name,
+      required String price,
+      required bool isPromo,
+      String? bestPrice}) {
+
+    // print((price == null) ? "from SELECTED CATEGORY ITEM data image kosong": "from SELECTED CATEGORY ITEM" + image);
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(
@@ -74,9 +106,9 @@ class _FavProductListState extends State<FavProductList> {
                 left: 10,
                 right: 10,
                 child: Image.network(
-                  "https://purepng.com/public/uploads/large/apple-watch-pcq.png",
-                  width: 100,
-                  height: 100,
+                  image, // image
+                  width: 80,
+                  height: 80,
                 ),
               ),
               Positioned(
@@ -87,22 +119,26 @@ class _FavProductListState extends State<FavProductList> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Apple Watch - M2"),
+                      Text(name), //product name
                       SizedBox(
                         height: 5,
                       ),
                       RichText(
+                        // price
                         text: TextSpan(
                           style: DefaultTextStyle.of(context).style,
-                          children: const <TextSpan>[
+                          children: <TextSpan>[
                             TextSpan(
-                                text: '\$140',
+                                text: '\$$price',
                                 style: TextStyle(fontWeight: FontWeight.bold)),
-                            TextSpan(
-                                text: ' \$200', style: TextStyle(fontSize: 12)),
+                            (isPromo == true)
+                                ? TextSpan()
+                                : TextSpan(
+                                    text: ' \$$bestPrice',
+                                    style: TextStyle(fontSize: 12)),
                           ],
                         ),
-                      )
+                      ) // price
                     ],
                   ),
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -117,9 +153,31 @@ class _FavProductListState extends State<FavProductList> {
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: filterProductsByCategory(),
+      builder: (context, snapshot){
+        if(snapshot.hasData && snapshot != []){
+          return showList();
+        }else if(snapshot.hasError){
+          return Center(
+            child: Text("no data found"),
+          );
+        }else{
+          return Center(
+            child: SizedBox(
+              child: CircularProgressIndicator(),
+              width: 60,
+              height: 60,
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  Container showList() {
     return Container(
       height: 500,
       child: Scrollbar(
@@ -128,12 +186,20 @@ class _FavProductListState extends State<FavProductList> {
         controller: _scrollController,
         child: GridView.builder(
             controller: _scrollController,
-            itemCount: 20,
+            itemCount: filteredList!.length,
             physics: BouncingScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2, childAspectRatio: 0.8),
             itemBuilder: (context, index) {
-              return favProductItem(context);
+              var data = filteredList!.elementAt(index);
+              return selectedCategoryItem(
+                price: data["product_price"],
+                isPromo: data["product_discount"],
+                context: context,
+                name: data["product_name"],
+                image: data["product_image"],
+                bestPrice: data["product_best_price"],
+              );
             }),
       ),
     );

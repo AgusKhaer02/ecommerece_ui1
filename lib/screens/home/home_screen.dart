@@ -1,6 +1,6 @@
 import 'package:ecommerece_ui1/screens/home/widgets/carousel_offer.dart';
 import 'package:ecommerece_ui1/screens/home/widgets/category_list.dart';
-import 'package:ecommerece_ui1/screens/home/widgets/fav_product_list.dart';
+import 'package:ecommerece_ui1/screens/home/widgets/selected_category_list.dart';
 import 'package:ecommerece_ui1/screens/home/widgets/header.dart';
 import 'package:ecommerece_ui1/screens/home/widgets/section_title.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               height: 20,
             ),
-            FavProductList(),
+            SelectedCategoryList(),
           ],
         ),
       ),

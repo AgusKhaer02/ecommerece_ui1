@@ -49,6 +49,7 @@ class _MainScreenState extends State<MainScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: TabBarView(
+        physics: BouncingScrollPhysics(),
         controller: _tabController,
         children: [...listPages],
       ),

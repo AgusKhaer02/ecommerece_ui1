@@ -1,0 +1,40 @@
+class Products{
+  static const List<Map<String, dynamic>> products = [
+    {
+      "product_image" : "https://ehabgroup.com/media/catalog/product/cache/e5922b12aade8af54b6d5005f5247b80/s/a/samsung_galaxy_fit2_black01.png",
+      "product_name" : "Samsung Galaxy Fit E",
+      "product_category" : "wristwatch",
+      "product_discount" : true,
+      "product_price" : "320",
+      "product_best_price" : "220",
+      "product_rating" : 4,
+      "product_total_reviews" : 4500,
+      "product_about" : "Samsung Galaxy Fit E Black was launched on 2021 also features a with a resolution of 128 x 64 pixels powered by processor , comes with of ram , 128 GB storage and a primary camera powered by a 70 mAh",
+      "product_available" : true,
+    },
+    {
+      "product_image" : "https://ehabgroup.com/media/catalog/product/cache/e5922b12aade8af54b6d5005f5247b80/s/a/samsung_galaxy_fit2_black01.png",
+      "product_name" : "Samsung Galaxy Fit E",
+      "product_category" : "wristwatch",
+      "product_discount" : true,
+      "product_price" : "320",
+      "product_best_price" : "220",
+      "product_rating" : 4,
+      "product_total_reviews" : 4500,
+      "product_about" : "Samsung Galaxy Fit E Black was launched on 2021 also features a with a resolution of 128 x 64 pixels powered by processor , comes with of ram , 128 GB storage and a primary camera powered by a 70 mAh",
+      "product_available" : true,
+    },
+    {
+      "product_image" : "https://ehabgroup.com/media/catalog/product/cache/e5922b12aade8af54b6d5005f5247b80/s/a/samsung_galaxy_fit2_black01.png",
+      "product_name" : "Samsung Galaxy Fit E 22",
+      "product_category" : "wristwatch",
+      "product_discount" : true,
+      "product_price" : "320",
+      "product_best_price" : "220",
+      "product_rating" : 4,
+      "product_total_reviews" : 4500,
+      "product_about" : "Samsung Galaxy Fit E Black was launched on 2021 also features a with a resolution of 128 x 64 pixels powered by processor , comes with of ram , 128 GB storage and a primary camera powered by a 70 mAh",
+      "product_available" : true,
+    },
+  ];
+}
